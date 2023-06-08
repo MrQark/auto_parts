@@ -1,0 +1,52 @@
+LIN_description_file ;
+LIN_protocol_version = "2.2" ;
+LIN_language_version = "2.2" ;
+LIN_speed = 19.200 kbps ;
+Nodes {
+ Master:MasterECU,1.0000 ms,0.1000 ms ;
+ Slaves:Slave1Motor,Slave2Sensor;
+}
+Signals {
+ MessageCounter:8,0x00,MasterECU,Slave1Motor,Slave2Sensor;
+ Ignition:1,0x0,MasterECU,Slave1Motor,Slave2Sensor;
+ WiperSpeed:3,0x0,MasterECU,Slave1Motor;
+ WiperActive:1,0x0,Slave1Motor,MasterECU;
+ ParkPosition:1,0x0,Slave1Motor,MasterECU;
+ CycleCounter:16,0x00,Slave1Motor,MasterECU;
+ StatusSensor:8,0x00,Slave2Sensor,MasterECU;
+ ValueSensor:8,0x00,Slave2Sensor,MasterECU;
+}
+Frames {
+ MasterCmd:0x10,MasterECU,4{
+ MessageCounter,0;
+ Ignition,8;
+ WiperSpeed,9;
+ }
+ MotorFrame:0x20,Slave1Motor,4{
+ WiperActive,0;
+ ParkPosition,1;
+ CycleCounter,16;
+ }
+ SensorFrame:0x30,Slave2Sensor,2{
+ StatusSensor,0;
+ ValueSensor,8;
+ }
+}
+Schedule_tables {
+ Table1 {
+ MasterCmd delay 20.0000 ms ;
+ MotorFrame delay 20.0000 ms ;
+ SensorFrame delay 20.0000 ms ;
+ }
+}
+Signal_encoding_types {
+ EncodingSpeed {
+ logical_value,0x00,"Off" ;
+ logical_value,0x01,"Speed1" ;
+ logical_value,0x02,"Speed2" ;
+ logical_value,0x03,"Interval" ;
+ }
+}
+Signal_representation {
+ EncodingSpeed:WiperSpeed;
+}

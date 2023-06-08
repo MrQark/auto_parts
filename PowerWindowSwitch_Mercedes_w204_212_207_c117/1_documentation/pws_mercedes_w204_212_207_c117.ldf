@@ -1,0 +1,86 @@
+// Generated with Intrepid LIN LDF Tool
+
+LIN_description_file ;
+
+LIN_protocol_version = "2.1";
+LIN_language_version = "2.1";
+LIN_speed = 19.2 kbps;
+
+Nodes {
+  Master: DCU, 5.0 ms, 1.0 ms;
+  Slaves: PWS;
+}
+
+
+Signals {
+	OvrdReWinLamp: 1, 0, DCU, PWS;
+	RiMirrSelLamp: 1, 0, DCU, PWS;
+	LeMirrSelLamp: 1, 0, DCU, PWS;
+	FrRiUpBtn: 1, 0, PWS, DCU;
+	FrRiAutBtn: 1, 0, PWS, DCU;
+	FrRiDwnBtn: 1, 0, PWS, DCU;
+	FrLeAutBtn: 1, 0, PWS, DCU;
+	FrLeUpBtn: 1, 0, PWS, DCU;
+	FrLeDwnBtn: 1, 0, PWS, DCU;
+	AdjmtUpBtn: 1, 0, PWS, DCU;
+	PsdRndBtn: 1, 0, PWS, DCU;
+	NoPsdRndBtn: 1, 0, PWS, DCU;
+	ReRiAutBtn: 1, 0, PWS, DCU;
+	ReRiUpBtn: 1, 0, PWS, DCU;
+	ReRiDwnBtn: 1, 0, PWS, DCU;
+	ReLeAutBtn: 1, 0, PWS, DCU;
+	ReLeUpBtn: 1, 0, PWS, DCU;
+	ReLeDwnBtn: 1, 0, PWS, DCU;
+	RiMirrSelBtn: 1, 0, PWS, DCU;
+	LeMirrSelBtn: 1, 0, PWS, DCU;
+	OvrdReWinBtn: 1, 0, PWS, DCU;
+	FoldMirrBtn: 1, 0, PWS, DCU;
+	AdjmtDwnBtn: 1, 0, PWS, DCU;
+	AdjmtLeBtn: 1, 0, PWS, DCU;
+	AdjmtRiBtn: 1, 0, PWS, DCU;
+	BackliteLamp: 1, 0, DCU, PWS;
+}
+
+
+Frames {
+	PwsBtn: 0x09, PWS, 3 {
+		FrLeDwnBtn, 1;
+		FrLeUpBtn, 2;
+		FrLeAutBtn, 3;
+		FrRiDwnBtn, 4;
+		FrRiUpBtn, 5;
+		FrRiAutBtn, 6;
+		AdjmtUpBtn, 7;
+		ReLeDwnBtn, 8;
+		ReLeUpBtn, 9;
+		ReLeAutBtn, 10;
+		ReRiDwnBtn, 11;
+		ReRiUpBtn, 12;
+		ReRiAutBtn, 13;
+		NoPsdRndBtn, 14;
+		PsdRndBtn, 15;
+		AdjmtRiBtn, 16;
+		AdjmtLeBtn, 17;
+		AdjmtDwnBtn, 18;
+		FoldMirrBtn, 19;
+		OvrdReWinBtn, 20;
+		LeMirrSelBtn, 21;
+		RiMirrSelBtn, 22;
+}
+	PwsRedLamp: 0x00, DCU, 8 {
+		LeMirrSelLamp, 0;
+		RiMirrSelLamp, 2;
+		OvrdReWinLamp, 4;
+}
+	PwsYelLamp: 0x0A, DCU, 8 {
+		BackliteLamp, 16;
+}
+}
+
+Schedule_tables {
+	Table1 {
+	PwsRedLamp delay 20.0000 ms ;
+	PwsYelLamp delay 20.0000 ms ;
+	PwsBtn delay 40.0000 ms ;
+	}
+ }
