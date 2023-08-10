@@ -2,18 +2,15 @@
 
 LIN_description_file ;
 
-LIN_protocol_version = "2.1";
-LIN_language_version = "2.1";
+LIN_protocol_version = "2.2";
+LIN_language_version = "2.2";
 LIN_speed = 19.2 kbps;
 
 Nodes {
-  Master: DCU, 5.0 ms, 1.0 ms;
+  Master: DCU, 5.0 ms, 0.2 ms;
   Slaves: LSU;
 }
 
-
-composite {
-}
 
 Signals {
 	BackliteBri: 8, 0, DCU, LSU;
@@ -29,7 +26,7 @@ Signals {
 
 
 Frames {
-	SwtSt: 0x0A, LSU, 3 {
+	SwtSt: 0x0A, LSU, 8 {
 		ReFogLamp, 8;
 		FrntFogLamp, 9;
 		LoBeamMod, 14;
@@ -39,17 +36,22 @@ Frames {
 		LiSwtFailr, 34;
 		DshbBri, 48;
 }
-	BackliteCtrl: 0x2B, DCU, 8 {
+	BackliteCtrl: 0x2B, DCU, 4 {
 		BackliteBri, 8;
 }
 }
 
-Sporadic_frames {
-}
 
-Event_triggered_frames {
+Node_attributes {
+	LSU { 
+        LIN_protocol = "2.2";
+        configured_NAD = 0x21;
+        product_id = ,,;
+        response_error = LSUerror;
+        P2_min = 150 ms;
+        ST_min = 50 ms; 
+	} 
 }
-
 
 Schedule_tables {
 	Table1 { 
@@ -62,7 +64,8 @@ Schedule_tables {
 Signal_encoding_types {
 	LiBri_CompuMethod { 
 		physical_value, 0 ,0 ,0.3937 ,0 ,"%";
-		logical_value, 255 ,"NOVALID_DATA";
+		logical_value, 255 ,"ERROR";
+		logical_value, 0 ,"OFF";
 	} 
 	LiSwtMod_CompuMethod { 
 		logical_value, 0 ,"LISWMOD_ON";
@@ -76,7 +79,4 @@ Signal_encoding_types {
 		logical_value, 0 ,"LISWT_NORML_ST";
 		logical_value, 1 ,"LISWT_FAILR_ST";
 	} 
-}
-
-Signal_representation {
 }
