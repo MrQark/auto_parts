@@ -1,0 +1,82 @@
+// Generated with Intrepid LIN LDF Tool
+
+LIN_description_file ;
+
+LIN_protocol_version = "2.1";
+LIN_language_version = "2.1";
+LIN_speed = 19.2 kbps;
+
+Nodes {
+  Master: DCU, 5.0 ms, 1.0 ms;
+  Slaves: LSU;
+}
+
+
+composite {
+}
+
+Signals {
+	BackliteBri: 8, 0, DCU, LSU;
+	ReFogLamp: 1, 0, LSU, DCU;
+	DshbBri: 8, 0, LSU, DCU;
+	PrkgLiMod: 1, 0, LSU, DCU;
+	LoBeamMod: 1, 0, LSU, DCU;
+	FrntFogLamp: 1, 0, LSU, DCU;
+	LampOffMod: 1, 0, LSU, DCU;
+	AutHdLiCtrlMod: 1, 0, LSU, DCU;
+	LiSwtFailr: 1, 0, LSU, DCU;
+}
+
+
+Frames {
+	SwtSt: 0x0A, LSU, 3 {
+		ReFogLamp, 8;
+		FrntFogLamp, 9;
+		LoBeamMod, 14;
+		PrkgLiMod, 15;
+		LampOffMod, 16;
+		AutHdLiCtrlMod, 17;
+		LiSwtFailr, 34;
+		DshbBri, 48;
+}
+	BackliteCtrl: 0x2B, DCU, 8 {
+		BackliteBri, 8;
+}
+}
+
+Sporadic_frames {
+}
+
+Event_triggered_frames {
+}
+
+
+Schedule_tables {
+	Table1 { 
+		SwtSt delay 20 ms;
+		BackliteCtrl delay 20 ms;
+	} 
+}
+
+
+Signal_encoding_types {
+	LiBri_CompuMethod { 
+		physical_value, 0 ,0 ,0.3937 ,0 ,"%";
+		logical_value, 255 ,"NOVALID_DATA";
+	} 
+	LiSwtMod_CompuMethod { 
+		logical_value, 0 ,"LISWMOD_ON";
+		logical_value, 1 ,"LISWMOD_OFF";
+	} 
+	FogLamp_CompuMethod { 
+		logical_value, 1 ,"LAMP_ON";
+		logical_value, 0 ,"LAMP_OFF";
+	} 
+	LiSwtFailr_CompuMethod { 
+		logical_value, 0 ,"LISWT_NORML_ST";
+		logical_value, 1 ,"LISWT_FAILR_ST";
+	} 
+}
+
+Signal_representation {
+}
