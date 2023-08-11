@@ -1,32 +1,34 @@
-// Generated with Intrepid LIN LDF Tool
-
 LIN_description_file ;
 
 LIN_protocol_version = "2.2";
 LIN_language_version = "2.2";
 LIN_speed = 19.2 kbps;
+Channel_name = "DB2";
+
 
 Nodes {
-  Master: DCU, 5.0 ms, 0.2 ms;
-  Slaves: LSU;
+  Master: DCM, 5.0 ms, 0.2 ms;
+  Slaves: LSM;
 }
 
 
 Signals {
-	BackliteBri: 8, 0, DCU, LSU;
-	ReFogLamp: 1, 0, LSU, DCU;
-	DshbBri: 8, 0, LSU, DCU;
-	PrkgLiMod: 1, 0, LSU, DCU;
-	LoBeamMod: 1, 0, LSU, DCU;
-	FrntFogLamp: 1, 0, LSU, DCU;
-	LampOffMod: 1, 0, LSU, DCU;
-	AutHdLiCtrlMod: 1, 0, LSU, DCU;
-	LiSwtFailr: 1, 0, LSU, DCU;
+	BackliteBri: 8, 0, DCM, LSM;
+	LSM_ResponseError: 1, 0, LSM, DCM;
+	ReFogLamp: 1, 0, LSM, DCM;
+	DshbBri: 8, 0, LSM, DCM;
+	PrkgLiMod: 1, 0, LSM, DCM;
+	LoBeamMod: 1, 0, LSM, DCM;
+	FrntFogLamp: 1, 0, LSM, DCM;
+	LampOffMod: 1, 0, LSM, DCM;
+	AutHdLiCtrlMod: 1, 0, LSM, DCM;
+	LiSwtFailr: 1, 0, LSM, DCM;
 }
 
 
 Frames {
-	SwtSt: 0x0A, LSU, 8 {
+	LSM_SwtSt_Frm: 0x0A, LSM, 8 {
+	    LSM_ResponseError, 0;
 		ReFogLamp, 8;
 		FrntFogLamp, 9;
 		LoBeamMod, 14;
@@ -36,27 +38,31 @@ Frames {
 		LiSwtFailr, 34;
 		DshbBri, 48;
 }
-	BackliteCtrl: 0x2B, DCU, 4 {
+	DCM_BackliteCtrl_Frm: 0x2B, DCM, 4 {
 		BackliteBri, 8;
 }
 }
 
 
 Node_attributes {
-	LSU { 
+	LSM { 
         LIN_protocol = "2.2";
         configured_NAD = 0x21;
-        product_id = ,,;
-        response_error = LSUerror;
+		product_id = 0x4E4E, 0x4553, 1;
+		response_error = LSM_ResponseError;
         P2_min = 150 ms;
         ST_min = 50 ms; 
+		configurable_frames {
+		LSM_SwtSt_Frm;
+		DCM_BackliteCtrl_Frm;
+    }
 	} 
 }
 
 Schedule_tables {
 	Table1 { 
-		SwtSt delay 20 ms;
-		BackliteCtrl delay 20 ms;
+		LSM_SwtSt_Frm delay 20 ms;
+		DCM_BackliteCtrl_Frm delay 20 ms;
 	} 
 }
 
@@ -79,4 +85,11 @@ Signal_encoding_types {
 		logical_value, 0 ,"LISWT_NORML_ST";
 		logical_value, 1 ,"LISWT_FAILR_ST";
 	} 
+}
+
+Signal_representation {
+  LiBri_CompuMethod: BackliteBri, DshbBri;
+  LiSwtMod_CompuMethod: PrkgLiMod, LoBeamMod, LampOffMod, AutHdLiCtrlMod;
+  FogLamp_CompuMethod: FrntFogLamp, ReFogLamp;
+  LiSwtFailr_CompuMethod: LiSwtFailr;
 }

@@ -1,49 +1,50 @@
-// Generated with Intrepid LIN LDF Tool
-
 LIN_description_file ;
 
-LIN_protocol_version = "2.1";
-LIN_language_version = "2.1";
+LIN_protocol_version = "2.2";
+LIN_language_version = "2.2";
 LIN_speed = 19.2 kbps;
+Channel_name = "DB1";
 
 Nodes {
-  Master: DCU, 5.0 ms, 1.0 ms;
-  Slaves: PWS;
+  Master: DCM, 5.0 ms, 0.2 ms;
+  Slaves: PWSM;
 }
 
 
 Signals {
-	OvrdReWinLamp: 1, 0, DCU, PWS;
-	RiMirrSelLamp: 1, 0, DCU, PWS;
-	LeMirrSelLamp: 1, 0, DCU, PWS;
-	FrRiUpBtn: 1, 0, PWS, DCU;
-	FrRiAutBtn: 1, 0, PWS, DCU;
-	FrRiDwnBtn: 1, 0, PWS, DCU;
-	FrLeAutBtn: 1, 0, PWS, DCU;
-	FrLeUpBtn: 1, 0, PWS, DCU;
-	FrLeDwnBtn: 1, 0, PWS, DCU;
-	AdjmtUpBtn: 1, 0, PWS, DCU;
-	PsdRndBtn: 1, 0, PWS, DCU;
-	NoPsdRndBtn: 1, 0, PWS, DCU;
-	ReRiAutBtn: 1, 0, PWS, DCU;
-	ReRiUpBtn: 1, 0, PWS, DCU;
-	ReRiDwnBtn: 1, 0, PWS, DCU;
-	ReLeAutBtn: 1, 0, PWS, DCU;
-	ReLeUpBtn: 1, 0, PWS, DCU;
-	ReLeDwnBtn: 1, 0, PWS, DCU;
-	RiMirrSelBtn: 1, 0, PWS, DCU;
-	LeMirrSelBtn: 1, 0, PWS, DCU;
-	OvrdReWinBtn: 1, 0, PWS, DCU;
-	FoldMirrBtn: 1, 0, PWS, DCU;
-	AdjmtDwnBtn: 1, 0, PWS, DCU;
-	AdjmtLeBtn: 1, 0, PWS, DCU;
-	AdjmtRiBtn: 1, 0, PWS, DCU;
-	BackliteLamp: 1, 0, DCU, PWS;
+	OvrdReWinLamp: 1, 0, DCM, PWSM;
+	RiMirrSelLamp: 1, 0, DCM, PWSM;
+	LeMirrSelLamp: 1, 0, DCM, PWSM;
+	PWSMerror: 1, 0, PWSM, DCM;
+	FrRiUpBtn: 1, 0, PWSM, DCM;
+	FrRiAutBtn: 1, 0, PWSM, DCM;
+	FrRiDwnBtn: 1, 0, PWSM, DCM;
+	FrLeAutBtn: 1, 0, PWSM, DCM;
+	FrLeUpBtn: 1, 0, PWSM, DCM;
+	FrLeDwnBtn: 1, 0, PWSM, DCM;
+	AdjmtUpBtn: 1, 0, PWSM, DCM;
+	PsdRndBtn: 1, 0, PWSM, DCM;
+	NoPsdRndBtn: 1, 0, PWSM, DCM;
+	ReRiAutBtn: 1, 0, PWSM, DCM;
+	ReRiUpBtn: 1, 0, PWSM, DCM;
+	ReRiDwnBtn: 1, 0, PWSM, DCM;
+	ReLeAutBtn: 1, 0, PWSM, DCM;
+	ReLeUpBtn: 1, 0, PWSM, DCM;
+	ReLeDwnBtn: 1, 0, PWSM, DCM;
+	RiMirrSelBtn: 1, 0, PWSM, DCM;
+	LeMirrSelBtn: 1, 0, PWSM, DCM;
+	OvrdReWinBtn: 1, 0, PWSM, DCM;
+	FoldMirrBtn: 1, 0, PWSM, DCM;
+	AdjmtDwnBtn: 1, 0, PWSM, DCM;
+	AdjmtLeBtn: 1, 0, PWSM, DCM;
+	AdjmtRiBtn: 1, 0, PWSM, DCM;
+	BackliteLamp: 1, 0, DCM, PWSM;
 }
 
 
 Frames {
-	PwsBtn: 0x09, PWS, 3 {
+	PWSM_PwsBtn_Frm: 0x09, PWSM, 3 {
+		PWSMerror, 0;
 		FrLeDwnBtn, 1;
 		FrLeUpBtn, 2;
 		FrLeAutBtn, 3;
@@ -67,31 +68,37 @@ Frames {
 		LeMirrSelBtn, 21;
 		RiMirrSelBtn, 22;
 }
-	PwsRedLamp: 0x00, DCU, 8 {
+	DCM_PwsRedLamp_Frm1: 0x00, DCM, 8 {
 		LeMirrSelLamp, 0;
 		RiMirrSelLamp, 2;
 		OvrdReWinLamp, 4;
 }
-	PwsYelLamp: 0x0A, DCU, 8 {
+	DCM_PwsYelLamp_Frm2: 0x0A, DCM, 8 {
 		BackliteLamp, 16;
 }
 }
 
 Node_attributes {
-	PWS { 
-        LIN_protocol = "2.1";
-        configured_NAD = 0x21;
-        product_id = ,,;
-        response_error = PWSerror;
+	PWSM { 
+        LIN_protocol = "2.2";
+        configured_NAD = 0x20;
+        product_id = 0x4E4E, 0x4553, 1;
+        response_error = PWSMerror;
         P2_min = 150 ms;
         ST_min = 50 ms;   
+		configurable_frames {
+			PWSM_PwsBtn_Frm;
+			DCM_PwsRedLamp_Frm1;
+			DCM_PwsYelLamp_Frm2;
+		}
 	} 
 }
 
 Schedule_tables {
-	Table1 { 
-		PwsRedLamp delay 20.0000 ms;
-		PwsYelLamp delay 20.0000 ms;
-		PwsBtn delay 40.0000 ms;
-	} 
+    Table1 { 
+        PWSM_PwsBtn_Frm delay 20 ms;
+        DCM_PwsRedLamp_Frm1 delay 20 ms;
+        DCM_PwsYelLamp_Frm2 delay 20 ms;
+    } 
 }
+
